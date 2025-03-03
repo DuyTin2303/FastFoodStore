@@ -76,4 +76,14 @@ public class OrderDetailDAO extends DBContext {
         }
         return list;
     }
+
+    public boolean add(int orderId, int inventoryId, int quantity, double sellingPrice, double discount, double originalPrice) {
+        String query = "INSERT INTO OrderDetails (order_id, inventory_id, quantity, selling_price, discount, original_price)\n"
+                + "VALUES (?, ?, ?, ?, ?, ?)";
+        try {
+            return execQuery(query, orderId, inventoryId, quantity, sellingPrice, discount, originalPrice) > 0;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }
