@@ -57,12 +57,9 @@ public class FoodCategoryManagementDAO extends DBContext {
 
     public boolean updateCategory(int categoryId, String name) throws SQLException {
         String query = "UPDATE FoodCategories SET category_name = ?, updated_at = CURRENT_TIMESTAMP WHERE category_id = ?";
-        try {
-            int rowsUpdated = execQuery(query, new Object[]{name, categoryId});
-            return rowsUpdated > 0;
-        } catch (SQLIntegrityConstraintViolationException e) {
-            throw new SQLException("Category name must be unique. This category already exists.", e);
-        }
+        int rowsUpdated = execQuery(query, new Object[]{name, categoryId});
+        return rowsUpdated > 0;
+
     }
 
     public boolean deleteCategory(int categoryId) {

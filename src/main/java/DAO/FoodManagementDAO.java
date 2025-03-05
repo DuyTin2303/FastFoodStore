@@ -40,32 +40,21 @@ public class FoodManagementDAO extends DBContext {
         return dishesList;
     }
 
-    public boolean addDish(String dishName, String description, double price, int categoryId, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        String sql = "INSERT INTO Dishes (dish_name, description, price, category_id, availability, created_at, updated_at) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+    public boolean addDish(String dishName, String description, double price, int categoryId, LocalDateTime createdAt, LocalDateTime updatedAt, String imageUrl) throws SQLException {
+        String sql = "INSERT INTO Dishes (dish_name, description, price, category_id, availability, created_at, updated_at, image_url) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-        Object[] params = {dishName, description, price, categoryId, true, Timestamp.valueOf(createdAt), Timestamp.valueOf(updatedAt)};
+        Object[] params = {dishName, description, price, categoryId, true, Timestamp.valueOf(createdAt), Timestamp.valueOf(updatedAt), imageUrl};
 
-        try {
-            return execQuery(sql, params) > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.err.println("SQL Error: " + e.getMessage());
-            return false;
-        }
+        return execQuery(sql, params) > 0;
     }
 
-    public boolean updateDish(int dishId, String dishName, String description, double price, int categoryId, LocalDateTime updatedAt) {
-        String sql = "UPDATE Dishes SET dish_name = ?, description = ?, price = ?, category_id = ?, updated_at = ? WHERE dish_id = ?";
+    public boolean updateDish(int dishId, String dishName, String description, double price, int categoryId, LocalDateTime updatedAt, String imageUrl) throws SQLException {
+        String sql = "UPDATE Dishes SET dish_name = ?, description = ?, price = ?, category_id = ?, updated_at = ?, image_url = ? WHERE dish_id = ?";
 
-        Object[] params = {dishName, description, price, categoryId, Timestamp.valueOf(updatedAt), dishId};
+        Object[] params = {dishName, description, price, categoryId, Timestamp.valueOf(updatedAt), imageUrl, dishId};
 
-        try {
-            return execQuery(sql, params) > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
+        return execQuery(sql, params) > 0;
     }
 
     public List<FoodCategories> getAllCategories() {

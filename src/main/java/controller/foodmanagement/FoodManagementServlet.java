@@ -27,6 +27,6 @@ public class FoodManagementServlet extends HttpServlet {
             throws ServletException, IOException {
         List<Dishes> dishes = dao.getAllDishes();
         request.setAttribute("dishes", dishes);
-        request.getRequestDispatcher("foodManagement.jsp").forward(request, response);
+        request.getRequestDispatcher("foodManagement/foodManagement.jsp").forward(request, response);
     }
 }
