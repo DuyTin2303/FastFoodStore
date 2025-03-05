@@ -13,7 +13,8 @@ public class VoucherDAO extends DBContext {
         String query = "SELECT *\n"
                 + "FROM Vouchers\n"
                 + "WHERE GETDATE() BETWEEN valid_from AND valid_until\n"
-                + "  AND is_used = 0;";
+                + "  AND status = 'Active'\n"
+                + "  AND so_luong > 0";
         try {
             ResultSet rs = execSelectQuery(query);
             while (rs.next()) {

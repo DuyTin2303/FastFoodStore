@@ -29,7 +29,7 @@ public class GetCartController extends HttpServlet {
             request.setAttribute("vouchers", voucherDAO.getAllValid());
             request.setAttribute("totalQuantity", cart.getTotalQuantity());
             request.setAttribute("totalAmount", cart.getTotalAmount());
-            request.getRequestDispatcher("cart.jsp").forward(request, response);
+            request.getRequestDispatcher("/cart/cart.jsp").forward(request, response);
         } catch (Exception e) {
             request.getRequestDispatcher("/").forward(request, response);
         }

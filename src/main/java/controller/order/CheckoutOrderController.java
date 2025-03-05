@@ -74,7 +74,8 @@ public class CheckoutOrderController extends HttpServlet {
                     voucherId,
                     paymentMethod,
                     address,
-                    estimatedDeliveryTime.toLocalDate());
+                    estimatedDeliveryTime.toLocalDate(),
+                    0);
             if (orderId == 0) {
                 throw new Exception();
             }
@@ -103,12 +104,13 @@ public class CheckoutOrderController extends HttpServlet {
             if (paymentMethod.equalsIgnoreCase(PaymentMethodEnum.Online.toString())) {
                 String paymentUrl = VNPay.getPaymentURL(order);
                 response.sendRedirect(paymentUrl);
+                return;
             } else {
                 request.getSession().setAttribute("success", "Order succesfully! Your order will be deliveried in" + order.getEstimatedDeliveryDate().format(DateTimeFormatter.ofPattern("dd/MM/YYYY")));
             }
         } catch (Exception e) {
             request.getSession().setAttribute("error", "Can't checkout this order. Please try again later!");
         }
-        request.getRequestDispatcher("/order").forward(request, response);
+        response.sendRedirect("/order");
     }
 }

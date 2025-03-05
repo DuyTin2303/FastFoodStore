@@ -45,7 +45,7 @@ public class VNPay {
         vnp_Params.put("vnp_Version", vnp_Version);
         vnp_Params.put("vnp_Command", vnp_Command);
         vnp_Params.put("vnp_TmnCode", vnp_TmnCode);
-        vnp_Params.put("vnp_Amount", String.valueOf((long) (order.getTotalAmount() * 100)));
+        vnp_Params.put("vnp_Amount", order.getTotalAmount() < 5000 ? String.valueOf(10000 * 100) : String.valueOf((long) (order.getTotalAmount() * 100)));
         vnp_Params.put("vnp_CreateDate", formatter.format(now.getTime()));
         vnp_Params.put("vnp_CurrCode", vnp_CurrCode);
         vnp_Params.put("vnp_IpAddr", vnp_IpAddr);

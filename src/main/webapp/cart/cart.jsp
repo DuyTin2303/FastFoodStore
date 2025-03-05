@@ -33,7 +33,7 @@
                                 <li class="list-group-item">
                                     <div class="row align-items-center">
                                         <div class="col-3 d-flex justify-content-center">
-                                            <img src="img/fast-food-image.jpg" alt="${cartItem.dish.dishName}" class="cart-item-img">
+                                            <img src="${cartItem.dish.imageUrl ? cartItem.dish.imageUrl : 'img/fast-food-image.jpg'}" alt="${cartItem.dish.dishName}" class="cart-item-img">
                                         </div>
                                         <div class="col-9">
                                             <div class="w-100 d-flex justify-content-between align-items-center">
@@ -71,12 +71,13 @@
                     </div>
 
                     <div class="card">
+                        <div class="card-header fw-bold">Select Voucher</div>
                         <div class="card-body">
                             <select id="select-voucher" class="form-control">
                                 <option value="0" discount-data="0">--- Choose voucher ---</option>
                                 <c:forEach items="${vouchers}" var="voucher">
                                     <option value="${voucher.voucherId}" discount-data="${voucher.discountPercentage}">
-                                        #${voucher.code} (Sale: ${voucher.discountPercentage}%)
+                                        ${voucher.name} (Sale: ${voucher.discountPercentage}%)
                                     </option>
                                 </c:forEach>
                             </select>

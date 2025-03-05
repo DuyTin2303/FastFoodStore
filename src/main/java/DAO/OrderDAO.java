@@ -79,23 +79,24 @@ public class OrderDAO extends DBContext {
         return null;
     }
 
-    public int add(int userId, double totalAmount, int voucherId, String paymentMethod, String deliveryAddress, LocalDate estimatedDeliveryDate) {
-        String query = "INSERT INTO Orders (user_id, total_amount, voucher_id, payment_method, delivery_address, estimated_delivery_date, created_at, updated_at)\n"
+    public int add(int userId, double totalAmount, int voucherId, String paymentMethod, String deliveryAddress, LocalDate estimatedDeliveryDate, double shippingFee) {
+        String query = "INSERT INTO Orders (user_id, total_amount, voucher_id, payment_method, delivery_address, estimated_delivery_date, created_at, updated_at, shipping_fee)\n"
                 + "OUTPUT inserted.order_id\n"
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                + "VALUES (?, ?, " + (voucherId == 0 ? "NULL" : voucherId) + ", ?, ?, ?, ?, ?, ?)";
         try {
             ResultSet rs = execSelectQuery(query, userId,
                     totalAmount,
-                    voucherId,
                     paymentMethod,
                     deliveryAddress,
                     estimatedDeliveryDate,
                     LocalDateTime.now(),
-                    LocalDateTime.now());
+                    LocalDateTime.now(),
+                    shippingFee);
             if (rs.next()) {
                 return rs.getInt("order_id");
             }
         } catch (Exception e) {
+            System.out.println(e);
         }
         return 0;
     }

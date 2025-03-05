@@ -23,7 +23,7 @@ public class GetOrderDetailController extends HttpServlet {
             Orders order = orderDAO.getById(orderId);
             
             request.setAttribute("order", order);
-            request.getRequestDispatcher("/orderDetail.jsp").forward(request, response);
+            request.getRequestDispatcher("order/orderDetail.jsp").forward(request, response);
         } catch (Exception e) {
             response.sendRedirect("/order");
         }
