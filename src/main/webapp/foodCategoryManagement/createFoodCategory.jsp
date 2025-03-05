@@ -12,7 +12,7 @@
 
         <div class="container mt-4">
             <h1 class="mb-4">Create Food Category</h1>
-            <form action="CreateFoodCategory" method="post" id="categoryForm">
+            <form action="/CreateFoodCategory" method="post" id="categoryForm">
                 <% String errorMessage = (String) request.getAttribute("errorMessage"); %>
                 <% if (errorMessage != null) { %>
                 <div class="alert alert-danger"><%= errorMessage %></div>
@@ -23,14 +23,9 @@
                     <input type="text" name="name" class="form-control" required>
                 </div>
 
-                <div class="form-group">
-                    <label for="description">Description</label>
-                    <textarea class="form-control" id="description" name="description" required></textarea>
-                </div>
                 <div class="mt-3">
                     <button type="submit" class="btn btn-primary">Create</button>
                     <button type="button" class="btn btn-secondary" id="clearForm">Cancel</button>
-
                 </div>
             </form> 
         </div>
