@@ -19,8 +19,7 @@ public class FoodManagementDAO extends DBContext {
             while (rs.next()) {
                 FoodCategories category = new FoodCategories(
                         rs.getInt("category_id"),
-                        rs.getString("category_name"),
-                        null, null, null
+                        rs.getString("category_name"), null, null
                 );
 
                 dishesList.add(new Dishes(
@@ -32,9 +31,8 @@ public class FoodManagementDAO extends DBContext {
                         rs.getBoolean("availability"),
                         rs.getTimestamp("created_at").toLocalDateTime(),
                         rs.getTimestamp("updated_at").toLocalDateTime(),
-                        category,
-                        null
-                ));
+                        rs.getString("image_url"),
+                        category));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -79,7 +77,6 @@ public class FoodManagementDAO extends DBContext {
                 categories.add(new FoodCategories(
                         rs.getInt("category_id"),
                         rs.getString("category_name"),
-                        rs.getString("description"),
                         rs.getTimestamp("created_at").toLocalDateTime(),
                         rs.getTimestamp("updated_at").toLocalDateTime()
                 ));
@@ -111,9 +108,8 @@ public class FoodManagementDAO extends DBContext {
                         rs.getBoolean("availability"),
                         rs.getTimestamp("created_at").toLocalDateTime(),
                         rs.getTimestamp("updated_at").toLocalDateTime(),
-                        category,
-                        null
-                );
+                        rs.getString("image_url"),
+                        category);
             }
         } catch (SQLException e) {
             e.printStackTrace();

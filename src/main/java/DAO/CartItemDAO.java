@@ -25,9 +25,7 @@ public class CartItemDAO extends DBContext {
             while (rs.next()) {
                 FoodCategories category = new FoodCategories(rs.getInt("category_id"),
                         rs.getString("category_name"),
-                        rs.getString("description"),
-                        null,
-                        null);
+                        null, null);
                 Dishes dish = new Dishes(rs.getInt("dish_id"),
                         rs.getString("dish_name"),
                         rs.getString("description"),
@@ -36,7 +34,8 @@ public class CartItemDAO extends DBContext {
                         rs.getBoolean("availability"),
                         rs.getTimestamp("created_at").toLocalDateTime(),
                         rs.getTimestamp("updated_at").toLocalDateTime(),
-                        category, null);
+                        rs.getString("image_url"),
+                        category);
 
                 list.add(new CartItems(rs.getInt("cart_item_id"),
                         rs.getInt("cart_id"),
@@ -62,9 +61,7 @@ public class CartItemDAO extends DBContext {
             if (rs.next()) {
                 FoodCategories category = new FoodCategories(rs.getInt("category_id"),
                         rs.getString("category_name"),
-                        rs.getString("description"),
-                        null,
-                        null);
+                        null, null);
                 Dishes dish = new Dishes(rs.getInt("dish_id"),
                         rs.getString("dish_name"),
                         rs.getString("description"),
@@ -73,7 +70,8 @@ public class CartItemDAO extends DBContext {
                         rs.getBoolean("availability"),
                         rs.getTimestamp("created_at").toLocalDateTime(),
                         rs.getTimestamp("updated_at").toLocalDateTime(),
-                        category, null);
+                        rs.getString("image_url"),
+                        category);
 
                 return new CartItems(rs.getInt("cart_item_id"),
                         rs.getInt("cart_id"),
@@ -99,7 +97,6 @@ public class CartItemDAO extends DBContext {
             if (rs.next()) {
                 FoodCategories category = new FoodCategories(rs.getInt("category_id"),
                         rs.getString("category_name"),
-                        rs.getString("description"),
                         null,
                         null);
                 Dishes dish = new Dishes(rs.getInt("dish_id"),
@@ -110,7 +107,8 @@ public class CartItemDAO extends DBContext {
                         rs.getBoolean("availability"),
                         rs.getTimestamp("created_at").toLocalDateTime(),
                         rs.getTimestamp("updated_at").toLocalDateTime(),
-                        category, null);
+                        rs.getString("image_url"),
+                        category);
 
                 return new CartItems(rs.getInt("cart_item_id"),
                         rs.getInt("cart_id"),

@@ -1,6 +1,7 @@
 package controller.cart;
 
 import DAO.CartDAO;
+import DAO.VoucherDAO;
 import java.io.IOException;
 
 import jakarta.servlet.ServletException;
@@ -15,6 +16,7 @@ import model.Users;
 public class GetCartController extends HttpServlet {
 
     private CartDAO cartDAO = new CartDAO();
+    private VoucherDAO voucherDAO = new VoucherDAO();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -24,6 +26,7 @@ public class GetCartController extends HttpServlet {
             Cart cart = cartDAO.getByUserId(user.getUserId());
 
             request.setAttribute("cart", cart);
+            request.setAttribute("vouchers", voucherDAO.getAllValid());
             request.setAttribute("totalQuantity", cart.getTotalQuantity());
             request.setAttribute("totalAmount", cart.getTotalAmount());
             request.getRequestDispatcher("cart.jsp").forward(request, response);

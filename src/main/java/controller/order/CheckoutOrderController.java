@@ -2,7 +2,6 @@ package controller.order;
 
 import DAO.CartDAO;
 import DAO.CartItemDAO;
-import DAO.InventoryDAO;
 import DAO.OrderDAO;
 import DAO.OrderDetailDAO;
 import DAO.VoucherDAO;
@@ -34,7 +33,6 @@ public class CheckoutOrderController extends HttpServlet {
     private OrderDAO orderDAO = new OrderDAO();
     private OrderDetailDAO orderDetailDAO = new OrderDetailDAO();
     private VoucherDAO voucherDAO = new VoucherDAO();
-    private InventoryDAO inventoryDAO = new InventoryDAO();
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -85,21 +83,15 @@ public class CheckoutOrderController extends HttpServlet {
 
             /*
             In each iteration of cartItems in cart
-            -> Add new inventory based on dish in cartItem
-            -> Add new orderDetail based on inventory and order 
+            -> Add new orderDetail based on dish and order 
             -> Remove cartItem 
              */
             for (CartItems cartItem : cart.getCartItems()) {
                 double originalPrice = cartItem.getTotalPrice();
                 double sellingPrice = cartItem.getTotalPrice() * (1 - percentageOfDecrease);
 
-                int inventoryId = inventoryDAO.add(cartItem.getDishId(),
-                        0,
-                        cartItem.getQuantity(),
-                        originalPrice, // Purchase Price
-                        sellingPrice); // Selling Price
                 orderDetailDAO.add(orderId,
-                        inventoryId,
+                        cartItem.getDishId(),
                         cartItem.getQuantity(),
                         sellingPrice,
                         originalPrice * percentageOfDecrease, // Discount

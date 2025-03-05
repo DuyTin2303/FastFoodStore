@@ -43,6 +43,7 @@ public class OrderDAO extends DBContext {
                         rs.getDate("estimated_delivery_date").toLocalDate(),
                         rs.getTimestamp("created_at").toLocalDateTime(),
                         rs.getTimestamp("updated_at").toLocalDateTime(),
+                        rs.getDouble("shipping_fee"),
                         null, voucher, orderDetails, orderStatuses));
             }
         } catch (Exception e) {
@@ -70,6 +71,7 @@ public class OrderDAO extends DBContext {
                         rs.getDate("estimated_delivery_date").toLocalDate(),
                         rs.getTimestamp("created_at").toLocalDateTime(),
                         rs.getTimestamp("updated_at").toLocalDateTime(),
+                        rs.getDouble("shipping_fee"),
                         null, voucher, orderDetails, orderStatuses);
             }
         } catch (Exception e) {

@@ -2,12 +2,10 @@ package DAO;
 
 import db.DBContext;
 import java.sql.ResultSet;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import model.Dishes;
 import model.FoodCategories;
-import model.Inventory;
 import model.OrderDetails;
 import model.OrderStatus;
 
@@ -19,8 +17,7 @@ public class OrderDetailDAO extends DBContext {
                 + "       Dishes.*,\n"
                 + "       FoodCategories.category_name\n"
                 + "FROM OrderDetails\n"
-                + "INNER JOIN Inventory ON OrderDetails.inventory_id = Inventory.inventory_id\n"
-                + "INNER JOIN Dishes ON Inventory.dish_id = Dishes.dish_id\n"
+                + "INNER JOIN Dishes ON OrderDetails.dish_id = Dishes.dish_id\n"
                 + "INNER JOIN FoodCategories ON Dishes.category_id = FoodCategories.category_id\n"
                 + "WHERE (OrderDetails.order_id = ?)";
         try {
@@ -38,21 +35,17 @@ public class OrderDetailDAO extends DBContext {
                         rs.getBoolean("availability"),
                         rs.getTimestamp("created_at").toLocalDateTime(),
                         rs.getTimestamp("updated_at").toLocalDateTime(),
-                        category, null);
-
-                Inventory inventory = new Inventory(rs.getInt("inventory_id"),
-                        rs.getInt("dish_id"),
-                        0, 0, 0, 0, null);
-                inventory.setDish(dish);
+                        rs.getString("image_url"),
+                        category);
 
                 list.add(new OrderDetails(rs.getInt("order_detail_id"),
                         rs.getInt("order_id"),
-                        rs.getInt("inventory_id"),
+                        rs.getInt("dish_id"),
                         rs.getInt("quantity"),
                         rs.getDouble("selling_price"),
                         rs.getDouble("discount"),
                         rs.getDouble("original_pirce"),
-                        null, inventory));
+                        null, dish));
             }
         } catch (Exception e) {
         }
@@ -77,11 +70,11 @@ public class OrderDetailDAO extends DBContext {
         return list;
     }
 
-    public boolean add(int orderId, int inventoryId, int quantity, double sellingPrice, double discount, double originalPrice) {
-        String query = "INSERT INTO OrderDetails (order_id, inventory_id, quantity, selling_price, discount, original_price)\n"
+    public boolean add(int orderId, int dishId, int quantity, double sellingPrice, double discount, double originalPrice) {
+        String query = "INSERT INTO OrderDetails (order_id, dish_id, quantity, selling_price, discount, original_price)\n"
                 + "VALUES (?, ?, ?, ?, ?, ?)";
         try {
-            return execQuery(query, orderId, inventoryId, quantity, sellingPrice, discount, originalPrice) > 0;
+            return execQuery(query, orderId, dishId, quantity, sellingPrice, discount, originalPrice) > 0;
         } catch (Exception e) {
             return false;
         }

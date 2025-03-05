@@ -4,35 +4,35 @@ public class OrderDetails {
 
     private int orderDetailId;
     private int orderId;
-    private int inventoryId;
+    private int dishId;
     private int quantity;
     private double sellingPrice;
     private double discount;
     private double originalPrice;
 
     private Orders order;
-    private Inventory inventory;
+    private Dishes dish;
 
-    public OrderDetails(int orderDetailId, int orderId, int inventoryId, int quantity, double sellingPrice, double discount, double originalPrice) {
+    public OrderDetails(int orderDetailId, int orderId, int dishId, int quantity, double sellingPrice, double discount, double originalPrice) {
         this.orderDetailId = orderDetailId;
         this.orderId = orderId;
-        this.inventoryId = inventoryId;
+        this.dishId = dishId;
         this.quantity = quantity;
         this.sellingPrice = sellingPrice;
         this.discount = discount;
         this.originalPrice = originalPrice;
     }
 
-    public OrderDetails(int orderDetailId, int orderId, int inventoryId, int quantity, double sellingPrice, double discount, double originalPrice, Orders order, Inventory inventory) {
+    public OrderDetails(int orderDetailId, int orderId, int dishId, int quantity, double sellingPrice, double discount, double originalPrice, Orders order, Dishes dish) {
         this.orderDetailId = orderDetailId;
         this.orderId = orderId;
-        this.inventoryId = inventoryId;
+        this.dishId = dishId;
         this.quantity = quantity;
         this.sellingPrice = sellingPrice;
         this.discount = discount;
         this.originalPrice = originalPrice;
         this.order = order;
-        this.inventory = inventory;
+        this.dish = dish;
     }
 
     public int getOrderDetailId() {
@@ -43,8 +43,8 @@ public class OrderDetails {
         return orderId;
     }
 
-    public int getInventoryId() {
-        return inventoryId;
+    public int getDishesId() {
+        return dishId;
     }
 
     public int getQuantity() {
@@ -67,15 +67,15 @@ public class OrderDetails {
         return order;
     }
 
-    public Inventory getInventory() {
-        return inventory;
+    public Dishes getDishes() {
+        return dish;
     }
 
     public void setOrder(Orders order) {
         this.order = order;
     }
 
-    public void setInventory(Inventory inventory) {
-        this.inventory = inventory;
+    public void setDishes(Dishes dish) {
+        this.dish = dish;
     }
 }

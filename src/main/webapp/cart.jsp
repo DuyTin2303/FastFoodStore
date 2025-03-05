@@ -57,15 +57,30 @@
                     </div>
 
                     <h5>Order Summary</h5>
-                    <div class="card">
+                    <div class="card mb-4">
                         <div class="card-body">
                             <div class="order-summary">
                                 <p>Subtotal: <span class="float-end"><strong>$${cart.totalAmount}</strong></span></p>
                                 <p>Delivery: <span class="float-end"><strong>Free</strong></span></p>
                                 <p>Tax: <span class="float-end"><strong>Free</strong></span></p>
+                                <p>Voucher: <span class="float-end"><strong>$<span id="discount-price">0.0</span></strong></span></p>
                                 <hr>
-                                <p class="mb-0"><strong>Total:</strong> <span class="float-end"><strong>$${cart.totalAmount}</strong></span></p>
+                                <p class="mb-0"><strong>Total:</strong> <span class="float-end"><strong>$<span id="total-price">${cart.totalAmount}</span></strong></span></p>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <select id="select-voucher" class="form-control">
+                                <option value="0" discount-data="0">--- Choose voucher ---</option>
+                                <c:forEach items="${vouchers}" var="voucher">
+                                    <option value="${voucher.voucherId}" discount-data="${voucher.discountPercentage}">
+                                        #${voucher.code} (Sale: ${voucher.discountPercentage}%)
+                                    </option>
+                                </c:forEach>
+                            </select>
+                            <input type="button" class="btn btn-success float-end mt-2" value="Apply" />
                         </div>
                     </div>
                 </div>
@@ -73,6 +88,7 @@
                 <div class="col-md-6">
                     <div class="card">
                         <form action="/order/checkout" method="post" class="card-body">
+                            <input type="hidden" name="voucherId" id="voucherId" value="0"/>
                             <div class="mb-3">
                                 <h5>How Would You Like to Receive Your Order</h5>
                                 <div class="btn-group w-100" role="group">
@@ -118,6 +134,27 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
         <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const voucherSelect = document.querySelector("select[id='select-voucher']");
+                const applyButton = document.querySelector(".btn.btn-success");
+                const discountPriceSpan = document.getElementById("discount-price");
+                const totalAmountSpan = document.getElementById("total-price");
+                const subtotal = parseFloat(${cart.totalAmount});
+
+                applyButton.addEventListener("click", function () {
+                    const selectedOption = voucherSelect.options[voucherSelect.selectedIndex];
+                    const discountPercentage = parseFloat(selectedOption.getAttribute("discount-data")) || 0;
+
+                    const discountAmount = (subtotal * discountPercentage) / 100;
+                    const newTotal = subtotal - discountAmount;
+
+                    discountPriceSpan.textContent = discountAmount.toFixed(1);
+                    totalAmountSpan.textContent = newTotal.toFixed(1);
+                    document.getElementById("voucherId").value = selectedOption.getAttribute("value");
+                });
+            });
+        </script>
+        <script>
             var citis = document.getElementById("city");
             var districts = document.getElementById("district");
             var wards = document.getElementById("ward");
@@ -133,27 +170,26 @@
 
             function renderCity(data) {
                 for (const x of data) {
-                    citis.options[citis.options.length] = new Option(x.Name, x.Id);
+                    citis.options[citis.options.length] = new Option(x.Name, x.Name);
                 }
                 citis.onchange = function () {
                     district.length = 1;
                     ward.length = 1;
                     if (this.value != "") {
-                        const result = data.filter(n => n.Id === this.value);
-
+                        const result = data.filter(n => n.Name === this.value);
                         for (const k of result[0].Districts) {
-                            district.options[district.options.length] = new Option(k.Name, k.Id);
+                            district.options[district.options.length] = new Option(k.Name, k.Name);
                         }
                     }
                 };
                 district.onchange = function () {
                     ward.length = 1;
-                    const dataCity = data.filter((n) => n.Id === citis.value);
+                    const dataCity = data.filter((n) => n.Name === citis.value);
                     if (this.value != "") {
-                        const dataWards = dataCity[0].Districts.filter(n => n.Id === this.value)[0].Wards;
+                        const dataWards = dataCity[0].Districts.filter(n => n.Name === this.value)[0].Wards;
 
                         for (const w of dataWards) {
-                            wards.options[wards.options.length] = new Option(w.Name, w.Id);
+                            wards.options[wards.options.length] = new Option(w.Name, w.Name);
                         }
                     }
                 };

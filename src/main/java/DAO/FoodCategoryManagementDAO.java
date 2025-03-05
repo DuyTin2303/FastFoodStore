@@ -18,7 +18,6 @@ public class FoodCategoryManagementDAO extends DBContext {
                 categories.add(new FoodCategories(
                         rs.getInt("category_id"),
                         rs.getString("category_name"),
-                        rs.getString("description"),
                         rs.getTimestamp("created_at").toLocalDateTime(),
                         rs.getTimestamp("updated_at").toLocalDateTime()
                 ));
@@ -36,7 +35,6 @@ public class FoodCategoryManagementDAO extends DBContext {
                 return new FoodCategories(
                         rs.getInt("category_id"),
                         rs.getString("category_name"),
-                        rs.getString("description"),
                         rs.getTimestamp("created_at").toLocalDateTime(),
                         rs.getTimestamp("updated_at").toLocalDateTime()
                 );
