@@ -2,6 +2,7 @@ package model;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Orders {
@@ -33,6 +34,8 @@ public class Orders {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.shippingFee = shippingFee;
+        this.orderDetails = new ArrayList<>();
+        this.orderStatuses = new ArrayList<>();
     }
 
     public Orders(int orderId, int userId, double totalAmount, int voucherId, String paymentMethod, String deliveryAddress, LocalDate estimatedDeliveryDate, LocalDateTime createdAt, LocalDateTime updatedAt, double shippingFee, Users user, Vouchers voucher, List<OrderDetails> orderDetails, List<OrderStatus> orderStatuses) {
@@ -50,6 +53,34 @@ public class Orders {
         this.voucher = voucher;
         this.orderDetails = orderDetails;
         this.orderStatuses = orderStatuses;
+    }
+
+    public int getTotalQuantity() {
+        int quantity = 0;
+        for (OrderDetails orderDetail : orderDetails) {
+            quantity += orderDetail.getQuantity();
+        }
+        return quantity;
+    }
+
+    public double getOriginalPrice() {
+        double price = 0;
+        for (OrderDetails orderDetail : orderDetails) {
+            price += orderDetail.getOriginalPrice();
+        }
+        return price;
+    }
+
+    public double getDiscountPrice() {
+        double price = 0;
+        for (OrderDetails orderDetail : orderDetails) {
+            price += orderDetail.getDiscount();
+        }
+        return price;
+    }
+
+    public OrderStatus getLastStatus() {
+        return !orderStatuses.isEmpty() ? orderStatuses.get(orderStatuses.size() - 1) : null;
     }
 
     public int getOrderId() {

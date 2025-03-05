@@ -106,7 +106,7 @@ public class CheckoutOrderController extends HttpServlet {
                 response.sendRedirect(paymentUrl);
                 return;
             } else {
-                request.getSession().setAttribute("success", "Order succesfully! Your order will be deliveried in" + order.getEstimatedDeliveryDate().format(DateTimeFormatter.ofPattern("dd/MM/YYYY")));
+                request.getSession().setAttribute("success", "Order succesfully! Your order will be deliveried in " + order.getEstimatedDeliveryDate().format(DateTimeFormatter.ofPattern("dd/MM/YYYY")));
             }
         } catch (Exception e) {
             request.getSession().setAttribute("error", "Can't checkout this order. Please try again later!");

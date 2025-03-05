@@ -9,9 +9,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.Orders;
+import utils.VNPay;
 
-@WebServlet(name = "GetOrderDetail", urlPatterns = {"/order/detail"})
-public class GetOrderDetailController extends HttpServlet {
+@WebServlet(urlPatterns = {"/order/repay"})
+public class RepayOrderController extends HttpServlet {
 
     private OrderDAO orderDAO = new OrderDAO();
 
@@ -21,11 +22,17 @@ public class GetOrderDetailController extends HttpServlet {
         try {
             int orderId = Integer.parseInt(request.getParameter("orderId"));
             Orders order = orderDAO.getById(orderId);
-            
-            request.setAttribute("order", order);
-            request.getRequestDispatcher("/order/orderDetail.jsp").forward(request, response);
+            String paymentUrl = VNPay.getPaymentURL(order);
+            response.sendRedirect(paymentUrl);
         } catch (Exception e) {
+            request.getSession().setAttribute("error", "Order not found");
             response.sendRedirect("/order");
         }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
     }
 }

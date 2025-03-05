@@ -21,6 +21,7 @@
         </style>
     </head>
     <body>
+        <jsp:include page="/snackbar.jsp"/>
         <div class="container my-5">
             <h2 class="text-center mb-4">My Shopping Cart</h2>
             <div class="row">
