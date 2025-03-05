@@ -96,7 +96,6 @@ public class OrderDAO extends DBContext {
                 return rs.getInt("order_id");
             }
         } catch (Exception e) {
-            System.out.println(e);
         }
         return 0;
     }
