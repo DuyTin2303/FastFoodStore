@@ -27,7 +27,7 @@
     <body>
         <div class="container mt-4">
             <h1 class="text-center">Food Category Management</h1>
-            <a href="createFoodCategory.jsp" class="btn btn-success mb-3">+ Add New Category</a>
+            <a href="/foodCategoryManagement/createFoodCategory.jsp" class="btn btn-success mb-3">+ Add New Category</a>
 
             <div class="table-responsive">
                 <table class="table table-bordered table-striped">
@@ -35,7 +35,6 @@
                         <tr>
                             <th>ID</th>
                             <th>Name</th>
-                            <th>Description</th>
                             <th>Created At</th>
                             <th>Updated At</th>
                             <th>Actions</th>
@@ -69,11 +68,10 @@
                         <tr>
                             <td><%= category.getCategoryId() %></td>
                             <td><%= category.getCategoryName() %></td>
-                            <td><%= category.getDescription() %></td>
                             <td><%= FormatTime.formatTimestamp(category.getCreatedAt()) %></td>
                             <td><%= FormatTime.formatTimestamp(category.getUpdatedAt()) %></td>
                             <td class="action-buttons">
-                                <a href="updateFoodCategory.jsp?id=<%= category.getCategoryId() %>" class="btn btn-warning btn-sm">Update</a>
+                                <a href="/foodCategoryManagement/updateFoodCategory.jsp?id=<%= category.getCategoryId() %>" class="btn btn-warning btn-sm">Update</a>
                                 <button class="btn btn-danger btn-sm" data-bs-toggle="modal" 
                                         data-bs-target="#deleteModal" data-category-id="<%= category.getCategoryId() %>">
                                     Delete

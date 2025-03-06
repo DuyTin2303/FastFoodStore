@@ -23,6 +23,6 @@ public class RoleManagementServlet extends HttpServlet {
 
         request.setAttribute("users", userList);
 
-        request.getRequestDispatcher("userList.jsp").forward(request, response);
+        request.getRequestDispatcher("/roleManagement/userList.jsp").forward(request, response);
     }
 }

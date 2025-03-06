@@ -24,7 +24,7 @@
     <body>
         <div class="container mt-4">
             <h1 class="text-center">Food Management</h1>
-            <a href="/FastFoodStore/CreateFood" class="btn btn-success mb-3">+ Add New Dish</a>
+            <a href="/CreateFood" class="btn btn-success mb-3">+ Add New Dish</a>
 
             <div class="table-responsive">
                 <table class="table table-bordered table-striped">
@@ -32,6 +32,7 @@
                         <tr>
                             <th>ID</th>
                             <th>Dish Name</th>
+                            <th>Dish Image</th>
                             <th>Description</th>
                             <th>Price</th>
                             <th>Category</th>
@@ -71,6 +72,10 @@
                         <tr>
                             <td><%= dish.getDishId() %></td>
                             <td><%= dish.getDishName() %></td>
+                            <td>
+                                <img src="<%= dish.getImageUrl() %>" alt="Dish Image" width="100" height="100" class="img-thumbnail">
+                            </td>
+
                             <td><%= dish.getDescription() %></td>
                             <td><%= dish.getPrice() %></td>
                             <td><%= dish.getCategory() != null ? dish.getCategory().getCategoryName() : "Unknown" %></td>    
@@ -80,7 +85,7 @@
                                 <%= dish.isAvailability() ? "Available" : "Unavailable" %>
                             </td>
                             <td class="action-buttons">
-                                <a href="<%= request.getContextPath() %>/UpdateFood?id=<%= dish.getDishId() %>" class="btn btn-warning btn-sm">Update</a>
+                                <a href="/UpdateFood?id=<%= dish.getDishId() %>" class="btn btn-warning btn-sm">Update</a>
                                 <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-dish-id="<%= dish.getDishId() %>">Delete</button>
                                 <button class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#softDeleteModal" 
                                         data-dish-id="<%= dish.getDishId() %>" 
