@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -68,8 +69,20 @@
                             <div class="order-header">
                                 <span><strong>Qty:</strong> ${order.totalQuantity}</span>
                                 <span><strong>Total:</strong> $${order.totalAmount}</span>
-                                <span><strong>Created:</strong> ${order.createdAt}</span>
-                                <span><strong>Status:</strong> <span class="badge rounded-pill text-bg-secondary text-uppercase">${order.lastStatus.status}</span></span>
+                                <fmt:parseDate pattern="yyyy-MM-dd'T'HH:mm" value="${order.createdAt}" var="formattedTime"/>
+                                <span><strong>Created:</strong> <fmt:formatDate pattern="HH:mm dd/MM/yyyy" type="both" value="${formattedTime}"/></span>
+                                <span><strong>Status:</strong> 
+                                    <span class="badge rounded-pill text-uppercase
+                                          <c:choose>
+                                              <c:when test="${order.lastStatus.status == 'Cancelled' || order.lastStatus.status == 'Failed' || order.lastStatus.status == 'Returned'}"> text-bg-danger</c:when>
+                                              <c:when test="${order.lastStatus.status == 'Pending'}"> text-bg-info</c:when>
+                                              <c:when test="${order.lastStatus.status == 'Confirmed'}"> text-bg-warning</c:when>
+                                              <c:when test="${order.lastStatus.status == 'Shipped' || order.lastStatus.status == 'Delivered'}"> text-bg-success</c:when>
+                                              <c:otherwise> text-bg-secondary</c:otherwise>
+                                          </c:choose>">
+                                        ${order.lastStatus.status}
+                                    </span>
+                                </span>
                             </div>
                         </button>   
                     </h2>
@@ -79,9 +92,6 @@
                                 <p><strong>Payment Method:</strong> ${order.paymentMethod}</p>
                                 <p><strong>Delivery Address:</strong> ${order.deliveryAddress}</p>
                                 <p><strong>Estimated Delivery:</strong> ${order.estimatedDeliveryDate}</p>
-                                <p><strong>Original Price:</strong> $${order.originalPrice}</p>
-                                <p><strong>Voucher Discount:</strong> $${order.discountPrice}</p>
-                                <p><strong>Shipping Fee:</strong> $${order.shippingFee}</p>
                             </div>
                             <div class="d-flex flex-column gap-2 w-25">
                                 <button onclick="window.location.href = '/order/detail?orderId=${order.orderId}'" class="btn btn-primary">View detail</button>
@@ -100,7 +110,8 @@
                                             <div class="step-circle bg-primary text-white">${j.index + 1}</div>
                                             <div class="step-content text-center mt-2">
                                                 <strong>${status.status}</strong>
-                                                <div class="text-muted">${status.updatedAt}</div>
+                                                <fmt:parseDate pattern="yyyy-MM-dd'T'HH:mm" value="${status.updatedAt}" var="formattedTime"/>
+                                                <div class="text-muted"><fmt:formatDate pattern="HH:mm dd/MM/yyyy" type="both" value="${formattedTime}"/></div>
                                             </div>
                                         </div>
                                     </c:forEach>

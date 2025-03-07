@@ -21,6 +21,9 @@ public class GetOrderDetailController extends HttpServlet {
         try {
             int orderId = Integer.parseInt(request.getParameter("orderId"));
             Orders order = orderDAO.getById(orderId);
+            if (order == null) {
+                throw new Exception();
+            }
             
             request.setAttribute("order", order);
             request.getRequestDispatcher("/order/orderDetail.jsp").forward(request, response);

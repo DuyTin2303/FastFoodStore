@@ -67,7 +67,7 @@ public class OrderDetails {
         return order;
     }
 
-    public Dishes getDishes() {
+    public Dishes getDish() {
         return dish;
     }
 
@@ -75,7 +75,7 @@ public class OrderDetails {
         this.order = order;
     }
 
-    public void setDishes(Dishes dish) {
+    public void setDish(Dishes dish) {
         this.dish = dish;
     }
 }

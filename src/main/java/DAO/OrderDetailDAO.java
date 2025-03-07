@@ -23,7 +23,7 @@ public class OrderDetailDAO extends DBContext {
         try {
             ResultSet rs = execSelectQuery(query, orderId);
             while (rs.next()) {
-                FoodCategories category = new FoodCategories(0,
+                FoodCategories category = new FoodCategories(rs.getInt("category_id"),
                         rs.getString("category_name"),
                         null, null, null);
 
@@ -44,7 +44,7 @@ public class OrderDetailDAO extends DBContext {
                         rs.getInt("quantity"),
                         rs.getDouble("selling_price"),
                         rs.getDouble("discount"),
-                        rs.getDouble("original_pirce"),
+                        rs.getDouble("original_price"),
                         null, dish));
             }
         } catch (Exception e) {
