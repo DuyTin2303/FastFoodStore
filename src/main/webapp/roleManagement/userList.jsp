@@ -20,7 +20,7 @@
     <body>
         <div class="container mt-4">
             <h1 class="text-center">User Management</h1>
-            <a href="/FastFoodStore/CreateUser" class="btn btn-success mb-3">+ Add New User</a>
+            <a href="/CreateUser" class="btn btn-success mb-3">+ Add New User</a>
             <div class="table-responsive">
                 <table class="table table-bordered table-striped">
                     <thead class="thead-dark">
@@ -65,7 +65,7 @@
                             <td><%= FormatTime.formatTimestamp(user.getCreatedAt()) %></td>
                             <td><%= FormatTime.formatTimestamp(user.getUpdatedAt()) %></td>
                             <td class="action-buttons">
-                                <a href="/FastFoodStore/AssignRole?id=<%= user.getUserId() %>" class="btn btn-warning btn-sm">Assign Role</a>
+                                <a href="/AssignRole?id=<%= user.getUserId() %>" class="btn btn-warning btn-sm">Assign Role</a>
                             </td>
                         </tr>
                         <% } } else { %>

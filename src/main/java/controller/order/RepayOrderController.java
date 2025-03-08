@@ -8,12 +8,11 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
 import model.Orders;
-import model.Users;
+import utils.VNPay;
 
-@WebServlet(name = "GetOrderHistory", urlPatterns = {"/order"})
-public class GetOrderHistoryController extends HttpServlet {
+@WebServlet(urlPatterns = {"/order/repay"})
+public class RepayOrderController extends HttpServlet {
 
     private OrderDAO orderDAO = new OrderDAO();
 
@@ -21,13 +20,13 @@ public class GetOrderHistoryController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            Users user = (Users) request.getSession().getAttribute("account");  // Change here
-            List<Orders> orders = orderDAO.getAllByUserId(user.getUserId());
-
-            request.setAttribute("orders", orders);
-            request.getRequestDispatcher("/order/orderHistory.jsp").forward(request, response);
+            int orderId = Integer.parseInt(request.getParameter("orderId"));
+            Orders order = orderDAO.getById(orderId);
+            String paymentUrl = VNPay.getPaymentURL(order);
+            response.sendRedirect(paymentUrl);
         } catch (Exception e) {
-            response.sendRedirect("/");
+            request.getSession().setAttribute("error", "Order not found");
+            response.sendRedirect("/order");
         }
     }
 }

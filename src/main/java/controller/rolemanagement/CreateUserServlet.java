@@ -20,7 +20,7 @@ public class CreateUserServlet extends HttpServlet {
 
         List<String> roles = dao.getPredefinedRoles();
         request.setAttribute("roles", roles);
-        request.getRequestDispatcher("createUser.jsp").forward(request, response);
+        request.getRequestDispatcher("/roleManagement/createUser.jsp").forward(request, response);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class CreateUserServlet extends HttpServlet {
         try {
             boolean success = dao.createUser(username, password, email, fullName, phoneNumber, address, role);
             if (success) {
-                response.sendRedirect("RoleManagement");
+                response.sendRedirect("/RoleManagement");
             }
         } catch (RuntimeException e) {
             request.setAttribute("error", e.getMessage());

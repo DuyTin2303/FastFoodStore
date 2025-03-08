@@ -20,6 +20,6 @@ public class FoodCategoryManagementServlet extends HttpServlet {
             throws ServletException, IOException {
         List<FoodCategories> categories = dao.getAllCategories();
         request.setAttribute("categories", categories);
-        request.getRequestDispatcher("foodCategoryManagement.jsp").forward(request, response);
+        request.getRequestDispatcher("foodCategoryManagement/foodCategoryManagement.jsp").forward(request, response);
     }
 }

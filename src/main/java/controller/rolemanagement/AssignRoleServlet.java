@@ -36,7 +36,7 @@ public class AssignRoleServlet extends HttpServlet {
 
         request.setAttribute("user", user);
         request.setAttribute("roles", roles);
-        request.getRequestDispatcher("assignRole.jsp").forward(request, response);
+        request.getRequestDispatcher("/roleManagement/assignRole.jsp").forward(request, response);
     }
 
     @Override
@@ -49,9 +49,9 @@ public class AssignRoleServlet extends HttpServlet {
             RoleManagementDAO dao = new RoleManagementDAO();
             dao.assignRole(userId, newRole);
 
-            response.sendRedirect("/FastFoodStore/RoleManagement");
+            response.sendRedirect("/RoleManagement");
         } catch (NumberFormatException e) {
-            response.sendRedirect("/FastFoodStore/RoleManagement");
+            response.sendRedirect("/RoleManagement");
         }
 
     }

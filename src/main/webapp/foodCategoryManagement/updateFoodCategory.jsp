@@ -41,17 +41,12 @@
                 if (category != null) {
             %>
 
-            <form action="UpdateFoodCategory" method="post" id="categoryForm">
+            <form action="/UpdateFoodCategory" method="post" id="categoryForm">
                 <input type="hidden" name="id" value="<%= category.getCategoryId() %>">
 
                 <div class="form-group">
                     <label class="form-label">Category Name:</label>
                     <input type="text" name="name" class="form-control" value="<%= category.getCategoryName() %>" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="description">Description</label>
-                    <textarea class="form-control" id="description" name="description" required><%= category.getDescription() %></textarea>
                 </div>
 
                 <div class="mt-3">

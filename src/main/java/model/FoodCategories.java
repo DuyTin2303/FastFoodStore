@@ -7,24 +7,21 @@ public class FoodCategories {
 
     private int categoryId;
     private String categoryName;
-    private String description;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
     private List<Dishes> dishes;
 
-    public FoodCategories(int categoryId, String categoryName, String description, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public FoodCategories(int categoryId, String categoryName, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.categoryId = categoryId;
         this.categoryName = categoryName;
-        this.description = description;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
 
-    public FoodCategories(int categoryId, String categoryName, String description, LocalDateTime createdAt, LocalDateTime updatedAt, List<Dishes> dishes) {
+    public FoodCategories(int categoryId, String categoryName, LocalDateTime createdAt, LocalDateTime updatedAt, List<Dishes> dishes) {
         this.categoryId = categoryId;
         this.categoryName = categoryName;
-        this.description = description;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.dishes = dishes;
@@ -36,10 +33,6 @@ public class FoodCategories {
 
     public String getCategoryName() {
         return categoryName;
-    }
-
-    public String getDescription() {
-        return description;
     }
 
     public LocalDateTime getCreatedAt() {

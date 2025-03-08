@@ -1,7 +1,6 @@
 package model;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 public class Dishes {
 
@@ -13,11 +12,11 @@ public class Dishes {
     private boolean availability;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private String imageUrl;
 
     private FoodCategories category;
-    private List<Inventory> inventories;
 
-    public Dishes(int dishId, String dishName, String description, double price, int categoryId, boolean availability, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Dishes(int dishId, String dishName, String description, double price, int categoryId, boolean availability, LocalDateTime createdAt, LocalDateTime updatedAt, String imageUrl) {
         this.dishId = dishId;
         this.dishName = dishName;
         this.description = description;
@@ -26,9 +25,10 @@ public class Dishes {
         this.availability = availability;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.imageUrl = imageUrl;
     }
 
-    public Dishes(int dishId, String dishName, String description, double price, int categoryId, boolean availability, LocalDateTime createdAt, LocalDateTime updatedAt, FoodCategories category, List<Inventory> inventories) {
+    public Dishes(int dishId, String dishName, String description, double price, int categoryId, boolean availability, LocalDateTime createdAt, LocalDateTime updatedAt, String imageUrl, FoodCategories category) {
         this.dishId = dishId;
         this.dishName = dishName;
         this.description = description;
@@ -37,8 +37,8 @@ public class Dishes {
         this.availability = availability;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.imageUrl = imageUrl;
         this.category = category;
-        this.inventories = inventories;
     }
 
     public int getDishId() {
@@ -73,19 +73,16 @@ public class Dishes {
         return updatedAt;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
     public FoodCategories getCategory() {
         return category;
     }
 
-    public List<Inventory> getInventories() {
-        return inventories;
-    }
 
     public void setCategory(FoodCategories category) {
         this.category = category;
-    }
-
-    public void setInventories(List<Inventory> inventories) {
-        this.inventories = inventories;
     }
 }

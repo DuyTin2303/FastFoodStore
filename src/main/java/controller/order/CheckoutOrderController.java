@@ -2,7 +2,6 @@ package controller.order;
 
 import DAO.CartDAO;
 import DAO.CartItemDAO;
-import DAO.InventoryDAO;
 import DAO.OrderDAO;
 import DAO.OrderDetailDAO;
 import DAO.VoucherDAO;
@@ -34,7 +33,6 @@ public class CheckoutOrderController extends HttpServlet {
     private OrderDAO orderDAO = new OrderDAO();
     private OrderDetailDAO orderDetailDAO = new OrderDetailDAO();
     private VoucherDAO voucherDAO = new VoucherDAO();
-    private InventoryDAO inventoryDAO = new InventoryDAO();
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -60,7 +58,7 @@ public class CheckoutOrderController extends HttpServlet {
             }
 
             // Process order and orderDetail
-            Users user = (Users) request.getSession().getAttribute("account"); // Use to create order
+            Users user = (Users) request.getSession().getAttribute("account"); // Use to create order  // Change here
             Cart cart = cartDAO.getByUserId(user.getUserId());
 
             Vouchers voucher = voucherDAO.getById(voucherId);
@@ -76,7 +74,8 @@ public class CheckoutOrderController extends HttpServlet {
                     voucherId,
                     paymentMethod,
                     address,
-                    estimatedDeliveryTime.toLocalDate());
+                    estimatedDeliveryTime.toLocalDate(),
+                    0);
             if (orderId == 0) {
                 throw new Exception();
             }
@@ -85,21 +84,15 @@ public class CheckoutOrderController extends HttpServlet {
 
             /*
             In each iteration of cartItems in cart
-            -> Add new inventory based on dish in cartItem
-            -> Add new orderDetail based on inventory and order 
+            -> Add new orderDetail based on dish and order 
             -> Remove cartItem 
              */
             for (CartItems cartItem : cart.getCartItems()) {
                 double originalPrice = cartItem.getTotalPrice();
                 double sellingPrice = cartItem.getTotalPrice() * (1 - percentageOfDecrease);
 
-                int inventoryId = inventoryDAO.add(cartItem.getDishId(),
-                        0,
-                        cartItem.getQuantity(),
-                        originalPrice, // Purchase Price
-                        sellingPrice); // Selling Price
                 orderDetailDAO.add(orderId,
-                        inventoryId,
+                        cartItem.getDishId(),
                         cartItem.getQuantity(),
                         sellingPrice,
                         originalPrice * percentageOfDecrease, // Discount
@@ -111,12 +104,13 @@ public class CheckoutOrderController extends HttpServlet {
             if (paymentMethod.equalsIgnoreCase(PaymentMethodEnum.Online.toString())) {
                 String paymentUrl = VNPay.getPaymentURL(order);
                 response.sendRedirect(paymentUrl);
+                return;
             } else {
-                request.getSession().setAttribute("success", "Order succesfully! Your order will be deliveried in" + order.getEstimatedDeliveryDate().format(DateTimeFormatter.ofPattern("dd/MM/YYYY")));
+                request.getSession().setAttribute("success", "Order succesfully! Your order will be deliveried in " + order.getEstimatedDeliveryDate().format(DateTimeFormatter.ofPattern("dd/MM/YYYY")));
             }
         } catch (Exception e) {
             request.getSession().setAttribute("error", "Can't checkout this order. Please try again later!");
         }
-        request.getRequestDispatcher("/order").forward(request, response);
+        response.sendRedirect("/order");
     }
 }

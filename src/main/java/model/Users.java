@@ -5,7 +5,6 @@
 package model;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  *
@@ -25,9 +24,6 @@ public class Users {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    private List<PasswordHistory> passwordHistories;
-    private List<PasswordReset> passwordResets;
-
     public Users(int userId, String username, String passwordHash, String email, String fullName, String phoneNumber, String address, String role, String googleId, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.userId = userId;
         this.username = username;
@@ -40,22 +36,6 @@ public class Users {
         this.googleId = googleId;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-    }
-
-    public Users(int userId, String username, String passwordHash, String email, String fullName, String phoneNumber, String address, String role, String googleId, LocalDateTime createdAt, LocalDateTime updatedAt, List<PasswordHistory> passwordHistories, List<PasswordReset> passwordResets) {
-        this.userId = userId;
-        this.username = username;
-        this.passwordHash = passwordHash;
-        this.email = email;
-        this.fullName = fullName;
-        this.phoneNumber = phoneNumber;
-        this.address = address;
-        this.role = role;
-        this.googleId = googleId;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-        this.passwordHistories = passwordHistories;
-        this.passwordResets = passwordResets;
     }
 
     public int getUserId() {
@@ -100,21 +80,5 @@ public class Users {
 
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
-    }
-
-    public List<PasswordHistory> getPasswordHistories() {
-        return passwordHistories;
-    }
-
-    public List<PasswordReset> getPasswordResets() {
-        return passwordResets;
-    }
-
-    public void setPasswordHistories(List<PasswordHistory> passwordHistories) {
-        this.passwordHistories = passwordHistories;
-    }
-
-    public void setPasswordResets(List<PasswordReset> passwordResets) {
-        this.passwordResets = passwordResets;
     }
 }

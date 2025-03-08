@@ -18,7 +18,6 @@ public class FoodCategoryManagementDAO extends DBContext {
                 categories.add(new FoodCategories(
                         rs.getInt("category_id"),
                         rs.getString("category_name"),
-                        rs.getString("description"),
                         rs.getTimestamp("created_at").toLocalDateTime(),
                         rs.getTimestamp("updated_at").toLocalDateTime()
                 ));
@@ -36,7 +35,6 @@ public class FoodCategoryManagementDAO extends DBContext {
                 return new FoodCategories(
                         rs.getInt("category_id"),
                         rs.getString("category_name"),
-                        rs.getString("description"),
                         rs.getTimestamp("created_at").toLocalDateTime(),
                         rs.getTimestamp("updated_at").toLocalDateTime()
                 );
@@ -47,24 +45,21 @@ public class FoodCategoryManagementDAO extends DBContext {
         return null;
     }
 
-    public boolean addCategory(String name, String description) throws SQLException {
-        String query = "INSERT INTO FoodCategories (category_name, description, created_at, updated_at) VALUES (?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
+    public boolean addCategory(String name) throws SQLException {
+        String query = "INSERT INTO FoodCategories (category_name, created_at, updated_at) VALUES (?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)";
         try {
-            int rowsInserted = execQuery(query, new Object[]{name, description});
+            int rowsInserted = execQuery(query, new Object[]{name});
             return rowsInserted > 0;
         } catch (SQLIntegrityConstraintViolationException e) {
             throw new SQLException("Category name must be unique. This category already exists.", e);
         }
     }
 
-    public boolean updateCategory(int categoryId, String name, String description) throws SQLException {
-        String query = "UPDATE FoodCategories SET category_name = ?, description = ?, updated_at = CURRENT_TIMESTAMP WHERE category_id = ?";
-        try {
-            int rowsUpdated = execQuery(query, new Object[]{name, description, categoryId});
-            return rowsUpdated > 0;
-        } catch (SQLIntegrityConstraintViolationException e) {
-            throw new SQLException("Category name must be unique. This category already exists.", e);
-        }
+    public boolean updateCategory(int categoryId, String name) throws SQLException {
+        String query = "UPDATE FoodCategories SET category_name = ?, updated_at = CURRENT_TIMESTAMP WHERE category_id = ?";
+        int rowsUpdated = execQuery(query, new Object[]{name, categoryId});
+        return rowsUpdated > 0;
+
     }
 
     public boolean deleteCategory(int categoryId) {

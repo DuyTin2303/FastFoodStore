@@ -18,13 +18,12 @@ public class UpdateFoodCategoryServlet extends HttpServlet {
             throws ServletException, IOException {
         String categoryIdParam = request.getParameter("id");
         String name = request.getParameter("name");
-        String description = request.getParameter("description");
         String errorMessage = null;
 
-        if (categoryIdParam != null && name != null && !name.trim().isEmpty() && description != null) {
+        if (categoryIdParam != null && name != null && !name.trim().isEmpty()) {
             try {
                 int categoryId = Integer.parseInt(categoryIdParam);
-                boolean success = dao.updateCategory(categoryId, name, description);
+                boolean success = dao.updateCategory(categoryId, name);
                 
                 if (!success) {
                     errorMessage = "Failed to update category. Please try again.";
@@ -39,13 +38,13 @@ public class UpdateFoodCategoryServlet extends HttpServlet {
                 }
             }
         } else {
-            errorMessage = "Category name and description cannot be empty.";
+            errorMessage = "Category name cannot be empty.";
         }
 
         if (errorMessage != null) {
             // Forward back to update page with error message
             request.setAttribute("errorMessage", errorMessage);
-            request.getRequestDispatcher("/updateFoodCategory.jsp?id=" + categoryIdParam).forward(request, response);
+            request.getRequestDispatcher("foodCategoryManagement/updateFoodCategory.jsp?id=" + categoryIdParam).forward(request, response);
         } else {
             // Redirect only on success
             response.sendRedirect("FoodCategoryManagement");

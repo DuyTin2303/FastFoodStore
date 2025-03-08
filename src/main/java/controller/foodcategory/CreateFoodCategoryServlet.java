@@ -2,12 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package controller.foodcategory;
 
 import DAO.FoodCategoryManagementDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -17,19 +15,18 @@ import java.sql.SQLException;
 
 @WebServlet(name = "CreateFoodCategoryServlet", urlPatterns = {"/CreateFoodCategory"})
 public class CreateFoodCategoryServlet extends HttpServlet {
-    
+
     private final FoodCategoryManagementDAO dao = new FoodCategoryManagementDAO();
-    
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String name = request.getParameter("name");
-        String description = request.getParameter("description");
         String errorMessage = null;
 
-        if (name != null && !name.trim().isEmpty() && description != null) {
+        if (name != null && !name.trim().isEmpty()) {
             try {
-                boolean success = dao.addCategory(name, description);
+                boolean success = dao.addCategory(name);
                 if (!success) {
                     errorMessage = "Failed to add category. Please try again.";
                 }
@@ -41,12 +38,12 @@ public class CreateFoodCategoryServlet extends HttpServlet {
                 }
             }
         } else {
-            errorMessage = "Category name and description cannot be empty.";
+            errorMessage = "Category name cannot be empty.";
         }
 
         if (errorMessage != null) {
             request.setAttribute("errorMessage", errorMessage);
-            request.getRequestDispatcher("createFoodCategory.jsp").forward(request, response);
+            request.getRequestDispatcher("/foodCategoryManagement/createFoodCategory.jsp").forward(request, response);
         } else {
             response.sendRedirect("FoodCategoryManagement");
         }
