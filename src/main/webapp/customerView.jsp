@@ -397,14 +397,14 @@ font-weight: bold;
                     </ul>
                     <div class="ms-auto d-flex align-items-center">
                         <!-- Customer Management Functions -->
-                        <a href="cart.jsp" class="text-white me-3 position-relative">
+                        <a href="/cart" class="text-white me-3 position-relative">
                             <i class="bi bi-cart3" style="font-size: 1.2rem;"></i>
                             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                 <!-- Cart count will be dynamically inserted -->
                                 <span class="visually-hidden">items in cart</span>
                             </span>
                         </a>
-                        <a href="orders.jsp" class="text-white me-3">
+                        <a href="/order" class="text-white me-3">
                             <i class="bi bi-clipboard-check" style="font-size: 1.2rem;"></i>
                         </a>
                         <a href="vouchers.jsp" class="text-white me-3">

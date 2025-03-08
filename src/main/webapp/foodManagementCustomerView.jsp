@@ -281,7 +281,7 @@
                                         </span>
                                     </td>
                                     <td>
-                                        <a href="loginView.jsp" class="btn btn-add-cart btn-sm">
+                                        <a href="/cart/add?dishId=${food.id}&quantity=1" class="btn btn-add-cart btn-sm">
                                             <i class="fas fa-shopping-cart me-1"></i> Thêm vào giỏ hàng
                                         </a>
                                     </td>
@@ -322,7 +322,7 @@
                                 </p>
                             </div>
                             <div class="card-footer text-center">
-                                <a href="loginView.jsp" class="btn btn-add-cart w-100">
+                                <a href="/cart/add?dishId=${food.id}&quantity=1" class="btn btn-add-cart w-100">
                                     <i class="fas fa-shopping-cart me-2"></i> Thêm vào giỏ hàng
                                 </a>
                             </div>
@@ -357,7 +357,7 @@
                                         <span class="badge bg-secondary mb-2">${food.category}</span>
                                         <div class="price fs-5 fw-bold text-danger">${food.price} VND</div>
                                     </div>
-                                    <a href="loginView.jsp" class="btn btn-add-cart w-100 mb-3">
+                                    <a href="/cart/add?dishId=${food.id}&quantity=1" class="btn btn-add-cart w-100 mb-3">
                                         <i class="fas fa-shopping-cart me-2"></i> Thêm vào giỏ hàng
                                     </a>
                                 </div>

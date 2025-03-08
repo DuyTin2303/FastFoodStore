@@ -40,7 +40,7 @@ public class DBContext {
     }
 
     // Phương thức cho các lệnh SELECT (có params)
-    public ResultSet execSelectQuery(String query, Object[] params) throws SQLException {
+    public ResultSet execSelectQuery(String query, Object... params) throws SQLException {
         PreparedStatement preparedStatement = conn.prepareStatement(query);
         
         if(params != null){
@@ -57,7 +57,7 @@ public class DBContext {
     }
 
     //Phương thức cho các lệnh INSERT, UPDATE, DELETE 
-    public int execQuery(String query, Object[] params) throws SQLException {
+    public int execQuery(String query, Object... params) throws SQLException {
                PreparedStatement preparedStatement = conn.prepareStatement(query);
 
          if(params != null){
