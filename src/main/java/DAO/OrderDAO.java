@@ -22,11 +22,71 @@ public class OrderDAO extends DBContext {
         orderDetailDAO = new OrderDetailDAO();
     }
 
+    public List<Orders> getAll() {
+        List<Orders> list = new ArrayList<>();
+        String query = "SELECT * FROM Orders\n"
+                + "ORDER BY order_id DESC";
+        try {
+            ResultSet rs = execSelectQuery(query);
+            while (rs.next()) {
+                List<OrderDetails> orderDetails = orderDetailDAO.getAllByOrderId(rs.getInt("order_id"));
+                List<OrderStatus> orderStatuses = orderDetailDAO.getAllStatusByOrderId(rs.getInt("order_id"));
+
+                list.add(new Orders(rs.getInt("order_id"),
+                        rs.getInt("user_id"),
+                        rs.getDouble("total_amount"),
+                        rs.getInt("voucher_id"),
+                        rs.getString("payment_method"),
+                        rs.getString("delivery_address"),
+                        rs.getDate("estimated_delivery_date").toLocalDate(),
+                        rs.getTimestamp("created_at").toLocalDateTime(),
+                        rs.getTimestamp("updated_at").toLocalDateTime(),
+                        rs.getDouble("shipping_fee"),
+                        null, null, orderDetails, orderStatuses));
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
+    
+    public List<Orders> getAllByStatus(String status) {
+        List<Orders> filteredList = new ArrayList<>();
+        String query = "SELECT * FROM Orders\n"
+                + "ORDER BY order_id DESC";
+        try {
+            ResultSet rs = execSelectQuery(query);
+            while (rs.next()) {
+                List<OrderDetails> orderDetails = orderDetailDAO.getAllByOrderId(rs.getInt("order_id"));
+                List<OrderStatus> orderStatuses = orderDetailDAO.getAllStatusByOrderId(rs.getInt("order_id"));
+
+                Orders order = new Orders(
+                        rs.getInt("order_id"),
+                        rs.getInt("user_id"),
+                        rs.getDouble("total_amount"),
+                        rs.getInt("voucher_id"),
+                        rs.getString("payment_method"),
+                        rs.getString("delivery_address"),
+                        rs.getDate("estimated_delivery_date").toLocalDate(),
+                        rs.getTimestamp("created_at").toLocalDateTime(),
+                        rs.getTimestamp("updated_at").toLocalDateTime(),
+                        rs.getDouble("shipping_fee"),
+                        null, null, orderDetails, orderStatuses);
+
+                if (order.getLastStatus() != null && order.getLastStatus().getStatus().equalsIgnoreCase(status)) {
+                    filteredList.add(order);
+                }
+            }
+        } catch (Exception e) {
+        }
+        return filteredList;
+    }
+
     public List<Orders> getAllByUserId(int userId) {
         List<Orders> list = new ArrayList<>();
         String query = "SELECT Orders.*\n"
                 + "FROM Orders\n"
-                + "WHERE (user_id = ?)";
+                + "WHERE (user_id = ?)\n"
+                + "ORDERY BY order_id DESC";
         try {
             ResultSet rs = execSelectQuery(query, userId);
             while (rs.next()) {
