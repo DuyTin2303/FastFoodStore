@@ -76,8 +76,4 @@ public class GeoUtils {
         int totalTime = WAIT_APPROVAL + WAIT_PICKUP + travelTime + WAIT_DELIVERY + WAIT_RECEIVER;
         return totalTime;
     }
-
-    public static void main(String[] args) {
-        System.out.println(estimateDeliveryTimeFromLocation("xa tan trung, huyen phu tan, tinh an giang"));
-    }
 }
