@@ -58,7 +58,7 @@ public class CheckoutOrderController extends HttpServlet {
             }
 
             // Process order and orderDetail
-            Users user = (Users) request.getSession().getAttribute("account"); // Use to create order
+            Users user = (Users) request.getSession().getAttribute("account"); // Use to create order  // Change here
             Cart cart = cartDAO.getByUserId(user.getUserId());
 
             Vouchers voucher = voucherDAO.getById(voucherId);

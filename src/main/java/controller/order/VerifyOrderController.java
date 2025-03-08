@@ -28,7 +28,6 @@ public class VerifyOrderController extends HttpServlet {
         } catch (Exception e) {
             request.getSession().setAttribute("error", "Order is not paid");
         }
-
         request.getRequestDispatcher("/order").forward(request, response);
     }
 }

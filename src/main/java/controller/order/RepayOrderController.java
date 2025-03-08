@@ -29,10 +29,4 @@ public class RepayOrderController extends HttpServlet {
             response.sendRedirect("/order");
         }
     }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-    }
 }

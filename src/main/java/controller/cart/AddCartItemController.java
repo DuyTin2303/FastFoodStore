@@ -26,7 +26,7 @@ public class AddCartItemController extends HttpServlet {
             int dishId = Integer.parseInt(request.getParameter("dishId"));
             int quantity = Integer.parseInt(request.getParameter("quantity"));
 
-            Users user = (Users) request.getSession().getAttribute("account");
+            Users user = (Users) request.getSession().getAttribute("account"); // Change here
             Cart cart = cartDAO.getByUserId(user.getUserId());
 
             boolean isSuccess;
