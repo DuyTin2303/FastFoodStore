@@ -19,7 +19,7 @@ public class AddCartItemController extends HttpServlet {
     private CartDAO cartDAO = new CartDAO();
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
             int dishId = Integer.parseInt(request.getParameter("dishId"));
