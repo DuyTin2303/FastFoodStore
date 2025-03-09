@@ -21,7 +21,7 @@ public class GetOrderHistoryController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            int userId = Integer.parseInt((String) request.getSession().getAttribute("userId"));
+            int userId = (int) request.getSession().getAttribute("userId");
             List<Orders> orders = orderDAO.getAllByUserId(userId);
 
             request.setAttribute("orders", orders);

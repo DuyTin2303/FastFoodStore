@@ -58,7 +58,7 @@ public class CheckoutOrderController extends HttpServlet {
             }
 
             // Process order and orderDetail
-            int userId = Integer.parseInt((String) request.getSession().getAttribute("userId"));
+            int userId = (int) request.getSession().getAttribute("userId");
             Cart cart = cartDAO.getByUserId(userId);
 
             Vouchers voucher = voucherDAO.getById(voucherId);

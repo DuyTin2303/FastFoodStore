@@ -22,7 +22,7 @@ public class GetCartController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            int userId = Integer.parseInt((String) request.getSession().getAttribute("userId"));
+            int userId = (int) request.getSession().getAttribute("userId");
             Cart cart = cartDAO.getByUserId(userId);
 
             request.setAttribute("cart", cart);
